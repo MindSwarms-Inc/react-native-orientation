@@ -46,6 +46,9 @@ module.exports = {
   unlockAllOrientations() {
     Orientation.unlockAllOrientations();
   },
+  attemptSyncingOrientation() {
+    Orientation.attemptSyncingOrientation();
+  },
   addOrientationListener(cb) {
     var key = getKey(cb);
     listeners[key] = DeviceEventEmitter.addListener(orientationDidChangeEvent,

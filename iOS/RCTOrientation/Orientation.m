@@ -173,6 +173,33 @@ RCT_EXPORT_METHOD(unlockAllOrientations)
 //  delegate.orientation = 3;
 }
 
+//
+// http://stackoverflow.com/a/19125466/1573638
+//
+// If your view controller only supported portrait orientation, for example,
+// and the user rotated the device to landscape orientation, no interface
+// rotation would occur. While the device was in landscape orientation,
+// let's say your code toggles a flag which allows for landscape orientation.
+// What would happen to the interface orientation? Nothing, because device
+// orientation has already occurred. To get the interface orientation to
+// match the device orientation, you would need to call attemptRotationToDeviceOrientation.
+// A call to attemptRotationToDeviceOrientation only rotates the orientation
+// of the interface, if and only if, the device itself has been rotated.
+//
+// http://stackoverflow.com/a/19125466/1573638
+//
+// To prevent error "accessing _cachedSystemAnimationFence requires the main thread"
+//
+RCT_EXPORT_METHOD(attemptSyncingOrientation)
+{
+  #if DEBUG
+    NSLog(@"Attempt Syncing Orientation");
+  #endif
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [UIViewController attemptRotationToDeviceOrientation];
+  });
+}
+
 - (NSDictionary *)constantsToExport
 {
 
